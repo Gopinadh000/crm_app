@@ -11,15 +11,23 @@ dotenv.config();
 
 const app = express();
 
-// CORS — allow credentials for cookie-based auth
-// Origins come from .env (frontend URLs only — not the API URL)
 const normalizeOrigin = (value) =>
   String(value ?? "")
     .trim()
     .replace(/^['"]+|['"]+$/g, "")
     .replace(/\/$/, "");
 
+// Hardcoded production / local frontend origins (CORS = browser Origin, not API URL)
+const HARDCODED_ORIGINS = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "https://app-mini-crm.netlify.app",
+];
+
+const NETLIFY_SITE_HOST = "app-mini-crm.netlify.app";
+
 const allowedOrigins = [
+  ...HARDCODED_ORIGINS,
   process.env.APP_CORS_ORIGIN_LOCAL,
   process.env.APP_CORS_ORIGIN_PRODUCTION,
   ...(String(process.env.APP_CORS_ORIGINS || "").split(",")),
@@ -27,16 +35,30 @@ const allowedOrigins = [
   .map(normalizeOrigin)
   .filter(Boolean);
 
+const isAllowedOrigin = (origin) => {
+  if (!origin) return true;
+
+  const normalized = normalizeOrigin(origin);
+  if (allowedOrigins.includes(normalized)) return true;
+
+  try {
+    const host = new URL(normalized).hostname;
+    // Netlify deploy previews: <id>--app-mini-crm.netlify.app
+    return host === NETLIFY_SITE_HOST || host.endsWith(`--${NETLIFY_SITE_HOST}`);
+  } catch {
+    return false;
+  }
+};
+
 app.use(
   cors({
     origin(origin, callback) {
-      // Allow non-browser clients (Postman, curl) with no Origin header
-      if (!origin || allowedOrigins.includes(normalizeOrigin(origin))) {
+      if (isAllowedOrigin(origin)) {
         return callback(null, true);
       }
       console.warn(`[CORS] Blocked origin: ${origin}`);
-      console.warn(`[CORS] Allowed: ${allowedOrigins.join(", ") || "(none)"}`);
-      return callback(new Error("Not allowed by CORS"));
+      console.warn(`[CORS] Allowed: ${allowedOrigins.join(", ")}`);
+      return callback(null, false);
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
@@ -49,7 +71,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/api/v1", v1Router);
 
-// Render/hosting platforms inject PORT; fall back to APP_PORT locally
 const port = Number(process.env.PORT || process.env.APP_PORT || 3001);
 
 const startServer = async () => {
@@ -68,6 +89,9 @@ const startServer = async () => {
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
       console.log(`[CORS] Allowed origins: ${allowedOrigins.join(", ")}`);
+      console.log(
+        `[CORS] Also allowing Netlify previews: *--${NETLIFY_SITE_HOST}`
+      );
     });
   } catch (err) {
     console.error("Failed to start server:", err);
