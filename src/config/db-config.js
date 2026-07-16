@@ -4,8 +4,29 @@ import { DB_CREDIENTAILS_CONFIG } from "./db-data.js";
 
 dotenv.config();
 
+/**
+ * Resolve app environment.
+ * Prefer APP_ENV=PROD on deploy. Also treat NODE_ENV=production / Render as PROD
+ * so production doesn't accidentally fall back to DEV credentials.
+ */
+const resolveAppEnv = () => {
+  const explicit = (process.env.APP_ENV || "").trim().toUpperCase();
+
+  if (explicit === "PROD" || explicit === "PRODUCTION") return "PROD";
+  if (explicit === "DEV" || explicit === "DEVELOPMENT") return "DEV";
+
+  const nodeEnv = String(process.env.NODE_ENV || "").toLowerCase();
+  const onRender =
+    String(process.env.RENDER || "").toLowerCase() === "true" ||
+    Boolean(process.env.RENDER_SERVICE_ID);
+
+  if (nodeEnv === "production" || onRender) return "PROD";
+
+  return "DEV";
+};
+
 const getDbConfig = () => {
-  const appEnv = (process.env.APP_ENV || "DEV").trim().toUpperCase();
+  const appEnv = resolveAppEnv();
   const config = DB_CREDIENTAILS_CONFIG[appEnv];
 
   if (!config) {
@@ -28,10 +49,11 @@ const getDbConfig = () => {
     throw new Error(
       `Missing DB env vars for ${appEnv}: ${missing
         .map((key) => `${prefix}${envKeyByField[key]}`)
-        .join(", ")}`
+        .join(", ")}. Set APP_ENV=${appEnv} and configure those variables in the host.`
     );
   }
 
+  console.log(`Using ${appEnv} database config (${config.DATABASE}@${config.HOST})`);
   return config;
 };
 

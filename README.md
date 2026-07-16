@@ -83,7 +83,8 @@ Runs the same SQL migration runner without needing a full request cycle. Still r
 | `APP_DB_PROD_*` | Same for production (+ optional SSL) |
 | `AUTO_DB_MIGRATION` | `TRUE` → run pending SQL migrations on server start |
 | `APP_CORS_ORIGIN_LOCAL` | Frontend origin in local (e.g. `http://localhost:5174`) |
-| `APP_CORS_ORIGIN_PRODUCTION` | Frontend origin in production |
+| `APP_CORS_ORIGIN_PRODUCTION` | Frontend origin in production (e.g. `https://app-mini-crm.netlify.app`) — **must match browser Origin exactly** |
+| `APP_CORS_ORIGINS` | Optional extra comma-separated origins |
 | `JWT_ACCESS_SECRET` / `JWT_REFRESH_SECRET` | Secrets for signing tokens |
 | `JWT_ACCESS_EXPIRES` / `JWT_REFRESH_EXPIRES` | e.g. `15m`, `7d` |
 | `JWT_ACCESS_COOKIE_MS` / `JWT_REFRESH_COOKIE_MS` | Cookie max-age in milliseconds |
@@ -352,6 +353,32 @@ POST /contact
 
 ---
 
-## Related
+## Deploy: fix CORS (Netlify → API)
+
+Frontend on Netlify (`https://app-mini-crm.netlify.app`) and API on another host is a **cross-origin** setup. The browser sends `Origin: https://app-mini-crm.netlify.app` and the API must allow it with `credentials: true`.
+
+### Backend host env (Render / Railway / etc.)
+
+```env
+APP_ENV=PROD
+APP_CORS_ORIGIN_PRODUCTION=https://app-mini-crm.netlify.app
+```
+
+- No trailing slash
+- Must match the address bar origin exactly
+- Redeploy/restart the API after changing env
+
+Cookies already use `SameSite=None; Secure` when `APP_ENV=PROD` (required for cross-site auth).
+
+### Netlify build env
+
+```env
+VITE_INSTANCE_TYPE=PROD
+VITE_API_URL_PROD=https://YOUR-BACKEND-HOST/api
+```
+
+Then **trigger a new Netlify deploy** (Vite bakes env in at build time).
+
+### Related
 
 Frontend README: [`../crm-frontend/README.md`](../crm-frontend/README.md)
