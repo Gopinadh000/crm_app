@@ -67,7 +67,7 @@ const DashboardPage = () => {
       <PageTitle title={`Hi 👋 ${displayName}`} />
 
       {errorMessage ? (
-        <div className="shrink-0 rounded-sm bg-red-50 px-3 py-2.5 text-sm text-red-600 tablet:px-4 tablet:py-3">
+        <div className="shrink-0 rounded-sm bg-app-error-soft px-3 py-2.5 text-sm text-app-error tablet:px-4 tablet:py-3">
           {errorMessage}
         </div>
       ) : null}
@@ -78,32 +78,32 @@ const DashboardPage = () => {
           value={isLoading ? '—' : stats.totalUsers}
           subtitle="Registered accounts in the system"
           icon={<PeopleAltOutlined fontSize="small" />}
-          accentClass="bg-blue-50"
-          iconClass="text-blue-600"
+          accentClass="bg-app-primary-50"
+          iconClass="text-app-primary-500"
         />
         <StatWidget
           title="Total Leads"
           value={isLoading ? '—' : stats.totalLeads}
           subtitle="Contacts marked as Lead"
           icon={<PersonSearchOutlined fontSize="small" />}
-          accentClass="bg-amber-50"
-          iconClass="text-amber-600"
+          accentClass="bg-app-warning-soft"
+          iconClass="text-app-warning"
         />
         <StatWidget
           title="Prospects"
           value={isLoading ? '—' : stats.totalProspects}
           subtitle="Contacts marked as Prospect"
           icon={<TrendingUpOutlined fontSize="small" />}
-          accentClass="bg-violet-50"
-          iconClass="text-violet-600"
+          accentClass="bg-app-secondary-50"
+          iconClass="text-app-secondary-500"
         />
         <StatWidget
           title="Customers"
           value={isLoading ? '—' : stats.totalCustomers}
           subtitle="Contacts marked as Customer"
           icon={<HandshakeOutlined fontSize="small" />}
-          accentClass="bg-emerald-50"
-          iconClass="text-emerald-600"
+          accentClass="bg-app-success-soft"
+          iconClass="text-app-success"
         />
       </div>
 

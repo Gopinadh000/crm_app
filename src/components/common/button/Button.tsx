@@ -18,9 +18,9 @@ const sizeClasses = {
 
 const variantClasses = {
   contained:
-    'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-100 disabled:bg-blue-300',
+    'bg-app-primary-500 text-app-text-inverse hover:bg-app-primary-800 focus:ring-app-primary-100 disabled:bg-app-primary-100 disabled:text-app-primary-800',
   outlined:
-    'border border-blue-600 bg-white text-blue-600 hover:bg-blue-50 focus:ring-blue-100 disabled:border-blue-200 disabled:text-blue-300',
+    'border border-app-primary-500 bg-app-surface text-app-primary-500 hover:bg-app-primary-50 focus:ring-app-primary-100 disabled:border-app-primary-100 disabled:text-app-primary-100',
 } as const
 
 const Button = ({

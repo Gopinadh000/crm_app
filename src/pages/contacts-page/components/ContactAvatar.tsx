@@ -25,14 +25,14 @@ const ContactAvatar = ({
       <img
         src={image}
         alt={`${firstName} ${lastName}`.trim()}
-        className={`${sizeClasses[size]} shrink-0 rounded-full object-cover border border-gray-200`}
+        className={`${sizeClasses[size]} shrink-0 rounded-full object-cover border border-app-border`}
       />
     )
   }
 
   return (
     <span
-      className={`${sizeClasses[size]} inline-flex shrink-0 items-center justify-center rounded-full bg-blue-600 font-semibold text-white`}
+      className={`${sizeClasses[size]} inline-flex shrink-0 items-center justify-center rounded-full bg-app-primary-500 font-semibold text-app-text-inverse`}
       aria-hidden="true"
     >
       {initial}

@@ -41,7 +41,7 @@ const ThreeDotsMenu = ({
         type="button"
         aria-label={ariaLabel}
         onClick={handleOpen}
-        className="inline-flex h-8 w-8 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-800"
+        className="inline-flex h-8 w-8 items-center justify-center rounded-md text-app-text-muted transition-colors hover:bg-app-surface-muted hover:text-app-text"
       >
         <MoreVert fontSize="small" />
       </button>
@@ -58,9 +58,10 @@ const ThreeDotsMenu = ({
               mt: 0.5,
               minWidth: 180,
               borderRadius: '8px',
-              boxShadow:
-                '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
-              border: '1px solid #e5e7eb',
+              boxShadow: 'var(--app-shadow)',
+              border: '1px solid var(--app-border)',
+              backgroundColor: 'var(--app-surface)',
+              color: 'var(--app-text)',
             },
           },
         }}
@@ -73,10 +74,10 @@ const ThreeDotsMenu = ({
                 key={item.label}
                 type="button"
                 onClick={() => handleItemClick(item)}
-                className={`flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition-colors hover:bg-gray-50 ${
+                className={`flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition-colors hover:bg-app-surface-muted ${
                   item.danger
-                    ? 'text-red-600 hover:bg-red-50'
-                    : 'text-gray-700'
+                    ? 'text-app-error hover:bg-app-error-soft'
+                    : 'text-app-text-secondary'
                 }`}
               >
                 {Icon ? <Icon fontSize="small" /> : null}

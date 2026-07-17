@@ -9,8 +9,8 @@ describe('StatWidget', () => {
         value={12}
         subtitle="Registered accounts in the system"
         icon={<span data-testid="widget-icon">U</span>}
-        accentClass="bg-blue-50"
-        iconClass="text-blue-600"
+        accentClass="bg-app-primary-50"
+        iconClass="text-app-primary-500"
       />,
     )
 

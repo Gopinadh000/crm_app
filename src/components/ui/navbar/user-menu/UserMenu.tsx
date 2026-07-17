@@ -5,6 +5,7 @@ import { useAuth } from '../../../../services/context/AuthContext'
 import UserMenuTrigger from './UserMenuTrigger'
 import UserProfileCard from './UserProfileCard'
 import UserMenuActions from './UserMenuActions'
+import ThemeControls from './ThemeControls'
 
 const UserMenu = () => {
   const navigate = useNavigate()
@@ -13,9 +14,7 @@ const UserMenu = () => {
   const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   const open = Boolean(anchorEl)
-  const name = user
-    ? `${user.firstName} ${user.lastName}`.trim()
-    : 'User'
+  const name = user ? `${user.firstName} ${user.lastName}`.trim() : 'User'
   const roleLabel = user?.role || 'USER'
   const avatarUrl = undefined
 
@@ -57,16 +56,18 @@ const UserMenu = () => {
           paper: {
             sx: {
               mt: 1,
-              minWidth: 240,
+              minWidth: 260,
               borderRadius: '8px',
-              boxShadow:
-                '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
-              border: '1px solid #e5e7eb',
+              boxShadow: 'var(--app-shadow)',
+              border: '1px solid var(--app-border)',
+              backgroundColor: 'var(--app-surface)',
+              color: 'var(--app-text)',
             },
           },
         }}
       >
         <UserProfileCard name={name} role={roleLabel} avatarUrl={avatarUrl} />
+        <ThemeControls />
         <UserMenuActions onLogout={handleLogout} />
       </Popover>
     </>

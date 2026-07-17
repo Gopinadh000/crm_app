@@ -277,7 +277,7 @@ const ContactsPage = () => {
       </PageTitle>
 
       {errorMessage ? (
-        <div className="shrink-0 rounded-sm bg-red-50 px-3 py-2.5 text-sm text-red-600 tablet:px-4 tablet:py-3">
+        <div className="shrink-0 rounded-sm bg-app-error-soft px-3 py-2.5 text-sm text-app-error tablet:px-4 tablet:py-3">
           {errorMessage}
         </div>
       ) : null}
@@ -366,9 +366,9 @@ const ContactsPage = () => {
           </div>
         }
       >
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-app-text-secondary">
           Are you sure you want to delete{' '}
-          <span className="font-semibold text-gray-900">
+          <span className="font-semibold text-app-text">
             {contactToDelete
               ? `${contactToDelete.firstName} ${contactToDelete.lastName}`
               : 'this contact'}

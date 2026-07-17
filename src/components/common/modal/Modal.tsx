@@ -65,22 +65,23 @@ const Modal = ({
       <button
         type="button"
         aria-label="Close modal backdrop"
-        className="absolute inset-0 bg-black/40 transition-opacity"
+        className="absolute inset-0 bg-[var(--app-overlay)] transition-opacity"
         onClick={onClose}
       />
 
       <div
         className={
           isSide
-            ? `relative ml-auto flex h-dvh ${sideSizeClasses[size]} flex-col rounded-none bg-white shadow-[-8px_0_24px_rgba(0,0,0,0.12)] animate-[slideInRight_0.22s_ease-out] tablet:rounded-l-xl`
-            : `relative m-auto flex max-h-[90dvh] ${centerSizeClasses[size]} flex-col rounded-xl bg-white shadow-xl animate-[fadeInScale_0.18s_ease-out]`
+            ? `relative ml-auto flex h-dvh ${sideSizeClasses[size]} flex-col rounded-none bg-app-surface shadow-[var(--app-shadow)] animate-[slideInRight_0.22s_ease-out] tablet:rounded-l-xl`
+            : `relative m-auto flex max-h-[90dvh] ${centerSizeClasses[size]} flex-col rounded-xl bg-app-surface shadow-[var(--app-shadow)] animate-[fadeInScale_0.18s_ease-out]`
         }
+        style={{ backgroundColor: 'var(--app-surface, #ffffff)' }}
       >
         {(title || showCloseButton) && (
-          <div className="flex shrink-0 items-center justify-between gap-3 border-b border-gray-100 px-4 py-2 tablet:px-5">
+          <div className="flex shrink-0 items-center justify-between gap-3 border-b border-app-border px-4 py-2 tablet:px-5">
             <div className="min-w-0 flex-1">
               {title ? (
-                <h2 className="truncate text-sm font-semibold text-gray-900 tablet:text-base">
+                <h2 className="truncate text-sm font-semibold text-app-text tablet:text-base">
                   {title}
                 </h2>
               ) : null}
@@ -90,7 +91,7 @@ const Modal = ({
                 type="button"
                 onClick={onClose}
                 aria-label="Close modal"
-                className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-800"
+                className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-app-text-muted transition-colors hover:bg-app-surface-muted hover:text-app-text"
               >
                 <Close sx={{ fontSize: 18 }} />
               </button>
@@ -98,12 +99,12 @@ const Modal = ({
           </div>
         )}
 
-        <div className="min-h-0 flex-1 overflow-y-auto px-4 py-3 tablet:px-5">
+        <div className="min-h-0 flex-1 overflow-y-auto px-4 py-3 text-app-text tablet:px-5">
           {children}
         </div>
 
         {footer ? (
-          <div className="shrink-0 border-t border-gray-100 bg-white px-4 py-2 tablet:px-5">
+          <div className="shrink-0 border-t border-app-border bg-app-surface px-4 py-2 tablet:px-5">
             {footer}
           </div>
         ) : null}

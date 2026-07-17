@@ -7,8 +7,8 @@ interface PageTitleProps {
 
 const PageTitle = ({ title, children }: PageTitleProps) => {
   return (
-    <div className="flex shrink-0 flex-col gap-3 rounded-sm bg-white p-3 mobile:flex-row mobile:items-center mobile:justify-between tablet:p-3.5">
-      <h1 className="truncate text-xl font-medium text-gray-900 tablet:text-2xl">
+    <div className="flex shrink-0 flex-col gap-3 rounded-sm bg-app-surface p-3 mobile:flex-row mobile:items-center mobile:justify-between tablet:p-3.5">
+      <h1 className="truncate text-xl font-medium text-app-text tablet:text-2xl">
         {title}
       </h1>
       {children ? (

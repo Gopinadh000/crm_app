@@ -35,7 +35,7 @@ const AppLayout = () => {
   }, [sidebarOpen])
 
   return (
-    <div className="flex h-dvh w-full overflow-hidden">
+    <div className="flex h-dvh w-full overflow-hidden bg-app-surface text-app-text">
       <SideBar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <div className="flex min-w-0 flex-1 flex-col">

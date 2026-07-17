@@ -10,7 +10,7 @@ const UserMenuActions = ({ onLogout }: UserMenuActionsProps) => {
       <button
         type="button"
         onClick={onLogout}
-        className="flex w-full cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-red-600 transition-colors hover:bg-red-50"
+        className="flex w-full cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm text-app-error transition-colors hover:bg-app-error-soft"
       >
         <LogoutOutlined fontSize="small" />
         <span className="font-medium">Logout</span>

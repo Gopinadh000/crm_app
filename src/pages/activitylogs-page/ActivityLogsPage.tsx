@@ -85,7 +85,7 @@ const ActivityLogsPage = () => {
       <PageTitle title="Activity Logs" />
 
       {errorMessage ? (
-        <div className="shrink-0 rounded-sm bg-red-50 px-3 py-2.5 text-sm text-red-600 tablet:px-4 tablet:py-3">
+        <div className="shrink-0 rounded-sm bg-app-error-soft px-3 py-2.5 text-sm text-app-error tablet:px-4 tablet:py-3">
           {errorMessage}
         </div>
       ) : null}

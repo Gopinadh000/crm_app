@@ -7,9 +7,9 @@ type RecentContactsTableProps = {
 }
 
 const statusBadgeClass: Record<string, string> = {
-  Lead: 'bg-amber-50 text-amber-700',
-  Prospect: 'bg-blue-50 text-blue-700',
-  Customer: 'bg-emerald-50 text-emerald-700',
+  Lead: 'bg-app-warning-soft text-app-warning',
+  Prospect: 'bg-app-primary-50 text-app-primary-800',
+  Customer: 'bg-app-success-soft text-app-success',
 }
 
 const formatDate = (value?: string) => {
@@ -28,13 +28,13 @@ const RecentContactsTable = ({
   isLoading = false,
 }: RecentContactsTableProps) => {
   return (
-    <div className="flex flex-col rounded-sm bg-white shadow-sm desktop:min-h-0 desktop:flex-1 desktop:overflow-hidden">
-      <div className="flex shrink-0 items-center justify-between border-b border-gray-100 px-3 py-3 tablet:px-4">
+    <div className="flex flex-col rounded-sm bg-app-surface shadow-sm desktop:min-h-0 desktop:flex-1 desktop:overflow-hidden">
+      <div className="flex shrink-0 items-center justify-between border-b border-app-border px-3 py-3 tablet:px-4">
         <div className="min-w-0">
-          <h2 className="text-sm font-semibold text-gray-900 tablet:text-base">
+          <h2 className="text-sm font-semibold text-app-text tablet:text-base">
             Recently Added Contacts
           </h2>
-          <p className="mt-0.5 text-xs text-gray-500">
+          <p className="mt-0.5 text-xs text-app-text-muted">
             Latest 5 contacts added to your workspace
           </p>
         </div>
@@ -42,16 +42,16 @@ const RecentContactsTable = ({
 
       <div className="desktop:min-h-0 desktop:flex-1 desktop:overflow-auto">
         {isLoading ? (
-          <div className="flex h-full items-center justify-center p-6 text-sm text-gray-500 tablet:p-8">
+          <div className="flex h-full items-center justify-center p-6 text-sm text-app-text-muted tablet:p-8">
             Loading recent contacts...
           </div>
         ) : contacts.length === 0 ? (
-          <div className="flex h-full items-center justify-center p-6 text-sm text-gray-500 tablet:p-8">
+          <div className="flex h-full items-center justify-center p-6 text-sm text-app-text-muted tablet:p-8">
             No contacts added yet.
           </div>
         ) : (
           <>
-            <div className="divide-y divide-gray-100 tablet:hidden">
+            <div className="divide-y divide-app-border tablet:hidden">
               {contacts.map((contact) => (
                 <div
                   key={contact.id}
@@ -64,10 +64,10 @@ const RecentContactsTable = ({
                     size="sm"
                   />
                   <div className="min-w-0 flex-1">
-                    <p className="truncate font-medium text-gray-900">
+                    <p className="truncate font-medium text-app-text">
                       {contact.firstName} {contact.lastName}
                     </p>
-                    <p className="mt-0.5 truncate text-xs text-gray-500">
+                    <p className="mt-0.5 truncate text-xs text-app-text-muted">
                       {contact.email || contact.companyName || '—'}
                     </p>
                   </div>
@@ -75,12 +75,12 @@ const RecentContactsTable = ({
                     <span
                       className={`inline-flex rounded px-2 py-0.5 text-[11px] font-semibold ${
                         statusBadgeClass[contact.status] ||
-                        'bg-gray-100 text-gray-700'
+                        'bg-app-surface-muted text-app-text-secondary'
                       }`}
                     >
                       {contact.status}
                     </span>
-                    <span className="text-[11px] text-gray-400">
+                    <span className="text-[11px] text-app-text-muted">
                       {formatDate(contact.createdAt)}
                     </span>
                   </div>
@@ -90,22 +90,22 @@ const RecentContactsTable = ({
 
             <div className="hidden min-w-0 overflow-x-auto tablet:block">
               <table className="min-w-[560px] w-full border-collapse text-left text-sm desktop:min-w-full">
-                <thead className="sticky top-0 z-10 bg-gray-50">
-                  <tr className="border-b border-gray-100 text-xs font-semibold uppercase tracking-wide text-gray-500">
-                    <th className="bg-gray-50 px-4 py-3">Name</th>
-                    <th className="bg-gray-50 px-4 py-3">Email</th>
-                    <th className="hidden bg-gray-50 px-4 py-3 desktop:table-cell">
+                <thead className="sticky top-0 z-10 bg-app-surface-muted">
+                  <tr className="border-b border-app-border text-xs font-semibold uppercase tracking-wide text-app-text-muted">
+                    <th className="bg-app-surface-muted px-4 py-3">Name</th>
+                    <th className="bg-app-surface-muted px-4 py-3">Email</th>
+                    <th className="hidden bg-app-surface-muted px-4 py-3 desktop:table-cell">
                       Company
                     </th>
-                    <th className="bg-gray-50 px-4 py-3">Status</th>
-                    <th className="bg-gray-50 px-4 py-3">Added</th>
+                    <th className="bg-app-surface-muted px-4 py-3">Status</th>
+                    <th className="bg-app-surface-muted px-4 py-3">Added</th>
                   </tr>
                 </thead>
                 <tbody>
                   {contacts.map((contact) => (
                     <tr
                       key={contact.id}
-                      className="border-b border-gray-50 transition-colors hover:bg-gray-50/80"
+                      className="border-b border-app-border transition-colors hover:bg-app-surface-muted/80"
                     >
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
@@ -115,28 +115,28 @@ const RecentContactsTable = ({
                             image={contact.image}
                             size="sm"
                           />
-                          <span className="font-medium text-gray-900">
+                          <span className="font-medium text-app-text">
                             {contact.firstName} {contact.lastName}
                           </span>
                         </div>
                       </td>
-                      <td className="max-w-[12rem] truncate px-4 py-3 text-gray-600">
+                      <td className="max-w-[12rem] truncate px-4 py-3 text-app-text-secondary">
                         {contact.email || '—'}
                       </td>
-                      <td className="hidden px-4 py-3 text-gray-600 desktop:table-cell">
+                      <td className="hidden px-4 py-3 text-app-text-secondary desktop:table-cell">
                         {contact.companyName || '—'}
                       </td>
                       <td className="px-4 py-3">
                         <span
                           className={`inline-flex rounded px-2 py-0.5 text-[11px] font-semibold ${
                             statusBadgeClass[contact.status] ||
-                            'bg-gray-100 text-gray-700'
+                            'bg-app-surface-muted text-app-text-secondary'
                           }`}
                         >
                           {contact.status}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap px-4 py-3 text-gray-600">
+                      <td className="whitespace-nowrap px-4 py-3 text-app-text-secondary">
                         {formatDate(contact.createdAt)}
                       </td>
                     </tr>

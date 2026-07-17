@@ -34,9 +34,9 @@ const SelectField = ({
 }: SelectFieldProps) => {
   return (
     <div className="flex w-full flex-col gap-1.5">
-      <label htmlFor={name} className="text-sm font-medium text-gray-700">
+      <label htmlFor={name} className="text-sm font-medium text-app-text-secondary">
         {label}
-        {required ? <span className="ml-1 text-red-500">*</span> : null}
+        {required ? <span className="ml-1 text-app-error">*</span> : null}
       </label>
 
       <FormControl fullWidth size="small" error={Boolean(error)}>
@@ -49,13 +49,38 @@ const SelectField = ({
           sx={{
             borderRadius: '6px',
             fontSize: '0.875rem',
+            color: 'var(--app-text)',
+            backgroundColor: 'var(--app-surface)',
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--app-border)',
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--app-border-strong)',
+            },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--app-primary-500)',
+            },
+            '& .MuiSelect-icon': {
+              color: 'var(--app-text-muted)',
+            },
             '& .MuiSelect-select': {
               py: 1,
             },
           }}
+          MenuProps={{
+            slotProps: {
+              paper: {
+                sx: {
+                  backgroundColor: 'var(--app-surface)',
+                  color: 'var(--app-text)',
+                  border: '1px solid var(--app-border)',
+                },
+              },
+            },
+          }}
         >
           <MenuItem value="" disabled>
-            <span className="text-gray-400">{placeholder}</span>
+            <span className="text-app-text-muted">{placeholder}</span>
           </MenuItem>
           {options.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -63,7 +88,9 @@ const SelectField = ({
             </MenuItem>
           ))}
         </Select>
-        {error ? <FormHelperText>{error}</FormHelperText> : null}
+        {error ? (
+          <FormHelperText sx={{ color: 'var(--app-error)' }}>{error}</FormHelperText>
+        ) : null}
       </FormControl>
     </div>
   )

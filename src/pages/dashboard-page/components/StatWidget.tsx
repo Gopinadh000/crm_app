@@ -18,13 +18,13 @@ const StatWidget = ({
   iconClass,
 }: StatWidgetProps) => {
   return (
-    <div className="flex min-h-[108px] flex-col justify-between rounded-sm bg-white p-3 shadow-sm tablet:min-h-[120px] tablet:p-4">
+    <div className="flex min-h-[108px] flex-col justify-between rounded-sm bg-app-surface p-3 shadow-sm tablet:min-h-[120px] tablet:p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-[11px] font-medium uppercase tracking-wide text-gray-500 tablet:text-xs">
+          <p className="text-[11px] font-medium uppercase tracking-wide text-app-text-muted tablet:text-xs">
             {title}
           </p>
-          <p className="mt-1.5 truncate text-2xl font-semibold text-gray-900 tablet:mt-2 tablet:text-3xl">
+          <p className="mt-1.5 truncate text-2xl font-semibold text-app-text tablet:mt-2 tablet:text-3xl">
             {value}
           </p>
         </div>
@@ -34,7 +34,7 @@ const StatWidget = ({
           {icon}
         </span>
       </div>
-      <p className="mt-2 text-[11px] text-gray-500 tablet:mt-3 tablet:text-xs">
+      <p className="mt-2 text-[11px] text-app-text-muted tablet:mt-3 tablet:text-xs">
         {subtitle}
       </p>
     </div>

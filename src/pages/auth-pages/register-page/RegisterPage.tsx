@@ -74,7 +74,7 @@ const RegisterPage = () => {
   }
 
   return (
-    <div className="flex h-full overflow-y-hidden flex-col items-center justify-center bg-white p-4 mobile:p-6 tablet:flex-row tablet:items-stretch tablet:gap-6 tablet:p-8 desktop:gap-10 desktop:p-12 xl:p-16">
+    <div className="flex h-full overflow-y-hidden flex-col items-center justify-center bg-app-surface p-4 mobile:p-6 tablet:flex-row tablet:items-stretch tablet:gap-6 tablet:p-8 desktop:gap-10 desktop:p-12 xl:p-16">
       <div className="hidden w-full items-center justify-center tablet:flex tablet:w-1/2">
         <img
           src={crmlogo}
@@ -83,7 +83,7 @@ const RegisterPage = () => {
         />
       </div>
 
-      <div className="my-auto w-full max-w-md overflow-y-auto rounded-md border border-gray-200 bg-white p-5 mobile:p-6 sm:p-8 tablet:w-1/2 tablet:max-h-[90vh] tablet:max-w-none tablet:px-8 tablet:py-10 desktop:px-12 desktop:py-12 xl:px-16 xl:py-14">
+      <div className="my-auto w-full max-w-md overflow-y-auto rounded-md border border-app-border bg-app-surface p-5 mobile:p-6 sm:p-8 tablet:w-1/2 tablet:max-h-[90vh] tablet:max-w-none tablet:px-8 tablet:py-10 desktop:px-12 desktop:py-12 xl:px-16 xl:py-14">
         <div className="mb-4 flex justify-center tablet:hidden">
           <img
             src={crmlogo}
@@ -93,10 +93,10 @@ const RegisterPage = () => {
         </div>
 
         <div className="mb-4 flex flex-col gap-2">
-          <h2 className="text-xl font-bold text-blue-500 mobile:text-2xl">
+          <h2 className="text-xl font-bold text-app-primary-500 mobile:text-2xl">
             Create your account
           </h2>
-          <p className="text-xs text-gray-500 mobile:text-sm">
+          <p className="text-xs text-app-text-muted mobile:text-sm">
             Enter your details to register a new account
           </p>
         </div>
@@ -154,7 +154,7 @@ const RegisterPage = () => {
           />
 
           {error ? (
-            <p className="rounded-md bg-red-50 px-3 py-2 text-xs text-red-600">
+            <p className="rounded-md bg-app-error-soft px-3 py-2 text-xs text-app-error">
               {error}
             </p>
           ) : null}
@@ -168,11 +168,11 @@ const RegisterPage = () => {
             disabled={isSubmitting}
           />
 
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-app-text-muted">
             Already have an account?{' '}
             <Link
               to="/login"
-              className="ml-1 font-bold text-blue-600 hover:underline"
+              className="ml-1 font-bold text-app-primary-500 hover:underline"
             >
               Login
             </Link>

@@ -89,7 +89,7 @@ const ContactForm = ({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col items-start gap-2 rounded-md border border-gray-200 bg-gray-50 px-2.5 py-2 mobile:flex-row mobile:items-center mobile:gap-3 tablet:px-3">
+      <div className="flex flex-col items-start gap-2 rounded-md border border-app-border bg-app-surface-muted px-2.5 py-2 mobile:flex-row mobile:items-center mobile:gap-3 tablet:px-3">
         <ContactAvatar
           firstName={value.firstName}
           lastName={value.lastName}
@@ -98,15 +98,15 @@ const ContactForm = ({
         />
 
         <div className="flex min-w-0 flex-1 flex-col gap-1">
-          <p className="text-xs font-medium text-gray-800">Contact Photo</p>
-          <p className="text-[11px] leading-tight text-gray-500">
+          <p className="text-xs font-medium text-app-text">Contact Photo</p>
+          <p className="text-[11px] leading-tight text-app-text-muted">
             JPEG, PNG, WEBP, or GIF. Max 2MB.
           </p>
           <div className="mt-0.5 flex flex-wrap items-center gap-1.5">
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="inline-flex items-center gap-1 rounded-md border border-blue-600 bg-white px-2 py-1 text-[11px] font-medium text-blue-600 transition-colors hover:bg-blue-50"
+              className="inline-flex items-center gap-1 rounded-md border border-app-primary-500 bg-app-surface px-2 py-1 text-[11px] font-medium text-app-primary-500 transition-colors hover:bg-app-primary-50"
             >
               <PhotoCameraOutlined sx={{ fontSize: 14 }} />
               {displayImage ? 'Change Photo' : 'Upload Photo'}
@@ -116,7 +116,7 @@ const ContactForm = ({
               <button
                 type="button"
                 onClick={handleRemoveImage}
-                className="inline-flex items-center gap-1 rounded-md border border-gray-300 bg-white px-2 py-1 text-[11px] font-medium text-gray-600 transition-colors hover:bg-gray-100"
+                className="inline-flex items-center gap-1 rounded-md border border-app-border bg-app-surface px-2 py-1 text-[11px] font-medium text-app-text-secondary transition-colors hover:bg-app-surface-muted"
               >
                 <DeleteOutlineOutlined sx={{ fontSize: 14 }} />
                 Remove
@@ -201,7 +201,7 @@ const ContactForm = ({
       />
 
       <div className="flex w-full flex-col gap-1.5">
-        <label htmlFor="notes" className="text-sm font-medium text-gray-700">
+        <label htmlFor="notes" className="text-sm font-medium text-app-text-secondary">
           Notes
         </label>
         <textarea
@@ -211,7 +211,7 @@ const ContactForm = ({
           value={value.notes || ''}
           placeholder="Add notes"
           onChange={handleChange}
-          className="w-full resize-none rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none transition-colors placeholder:text-gray-400 hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          className="w-full resize-none rounded-md border border-app-border bg-app-surface px-3 py-2 text-sm text-app-text outline-none transition-colors placeholder:text-app-text-muted hover:border-app-border-strong focus:border-app-primary-500 focus:ring-2 focus:ring-app-primary-100"
         />
       </div>
     </div>
