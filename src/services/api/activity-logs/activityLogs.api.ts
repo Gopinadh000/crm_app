@@ -46,3 +46,25 @@ export const fetchActivityLogs = async (
 
   return data.data as ActivityLogsListResponse
 }
+
+/** Fetch every page matching current search (API max limit is 50). */
+export const fetchAllActivityLogs = async (
+  params: Omit<FetchActivityLogsParams, 'page' | 'limit'> = {},
+): Promise<ActivityLog[]> => {
+  const all: ActivityLog[] = []
+  let page = 1
+  let totalPages = 1
+
+  do {
+    const data = await fetchActivityLogs({
+      ...params,
+      page,
+      limit: 50,
+    })
+    all.push(...data.logs)
+    totalPages = data.pagination.totalPages
+    page += 1
+  } while (page <= totalPages)
+
+  return all
+}

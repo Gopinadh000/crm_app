@@ -1,5 +1,11 @@
-import { DeleteOutlineRounded, EditOutlined, Search } from '@mui/icons-material'
+import {
+  DeleteOutlineRounded,
+  DownloadOutlined,
+  EditOutlined,
+  Search,
+} from '@mui/icons-material'
 import ThreeDotsMenu from '../../../components/common/three-dots-menu/ThreeDotsMenu'
+import Button from '../../../components/common/button/Button'
 import type {
   Contact,
   ContactStatus,
@@ -11,12 +17,14 @@ import ContactAvatar from './ContactAvatar'
 type ContactsTableProps = {
   contacts: Contact[]
   isLoading?: boolean
+  isExporting?: boolean
   search: string
   onSearchChange: (value: string) => void
   statusFilter: ContactStatus | ''
   onStatusFilterChange: (value: ContactStatus | '') => void
   pagination: ContactsPagination
   onPageChange: (page: number) => void
+  onExportCsv?: () => void
   canManage?: boolean
   onEdit: (contact: Contact) => void
   onDelete: (contact: Contact) => void
@@ -31,12 +39,14 @@ const statusBadgeClass: Record<ContactStatus, string> = {
 const ContactsTable = ({
   contacts,
   isLoading = false,
+  isExporting = false,
   search,
   onSearchChange,
   statusFilter,
   onStatusFilterChange,
   pagination,
   onPageChange,
+  onExportCsv,
   canManage = false,
   onEdit,
   onDelete,
@@ -79,6 +89,17 @@ const ContactsTable = ({
               </option>
             ))}
           </select>
+
+          {onExportCsv ? (
+            <Button
+              label={isExporting ? 'Exporting...' : 'CSV'}
+              variant="outlined"
+              size="sm"
+              disabled={isLoading || isExporting || total === 0}
+              onClick={onExportCsv}
+              startIcon={<DownloadOutlined fontSize="small" />}
+            />
+          ) : null}
         </div>
       </div>
 

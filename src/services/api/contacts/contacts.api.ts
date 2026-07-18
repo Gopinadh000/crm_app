@@ -85,13 +85,35 @@ export const fetchContacts = async (
   const { data } = await apiInstance.get('/v1/contacts', {
     params: {
       page: params.page ?? 1,
-      limit: 10,
+      limit: params.limit ?? 10,
       search: params.search?.trim() || undefined,
       status: params.status || undefined,
     },
   })
 
   return data.data as ContactsListResponse
+}
+
+/** Fetch every page matching current filters (backend page size is fixed at 10). */
+export const fetchAllContacts = async (
+  params: Omit<FetchContactsParams, 'page' | 'limit'> = {},
+): Promise<Contact[]> => {
+  const all: Contact[] = []
+  let page = 1
+  let totalPages = 1
+
+  do {
+    const data = await fetchContacts({
+      ...params,
+      page,
+      limit: 10,
+    })
+    all.push(...data.contacts)
+    totalPages = data.pagination.totalPages
+    page += 1
+  } while (page <= totalPages)
+
+  return all
 }
 
 export const createContact = async (

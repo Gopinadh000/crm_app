@@ -1,4 +1,5 @@
-import { Search } from '@mui/icons-material'
+import { DownloadOutlined, Search } from '@mui/icons-material'
+import Button from '../../../components/common/button/Button'
 import type {
   ActivityLog,
   ActivityLogsPagination,
@@ -7,10 +8,12 @@ import type {
 type ActivityLogsTableProps = {
   logs: ActivityLog[]
   isLoading?: boolean
+  isExporting?: boolean
   search: string
   onSearchChange: (value: string) => void
   pagination: ActivityLogsPagination
   onPageChange: (page: number) => void
+  onExportCsv?: () => void
 }
 
 const actionStyles: Record<string, string> = {
@@ -38,10 +41,12 @@ const formatDateTime = (value?: string) => {
 const ActivityLogsTable = ({
   logs,
   isLoading = false,
+  isExporting = false,
   search,
   onSearchChange,
   pagination,
   onPageChange,
+  onExportCsv,
 }: ActivityLogsTableProps) => {
   const { page, limit, total, totalPages } = pagination
   const from = total === 0 ? 0 : (page - 1) * limit + 1
@@ -50,18 +55,31 @@ const ActivityLogsTable = ({
   return (
     <div className="flex flex-col rounded-sm bg-app-surface desktop:min-h-0 desktop:flex-1 desktop:overflow-hidden">
       <div className="flex shrink-0 flex-col gap-3 border-b border-app-border px-3 py-3 tablet:px-4 mobile:flex-row mobile:items-center mobile:justify-end">
-        <div className="relative w-full mobile:w-72 mobile:max-w-sm">
-          <Search
-            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-app-text-muted"
-            sx={{ fontSize: 18 }}
-          />
-          <input
-            type="search"
-            value={search}
-            onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Search by action or description"
-            className="h-9 w-full rounded-md border border-app-border bg-app-surface pl-9 pr-3 text-sm text-app-text outline-none transition-colors placeholder:text-app-text-muted hover:border-app-border-strong focus:border-app-primary-500 focus:ring-2 focus:ring-app-primary-100"
-          />
+        <div className="flex w-full flex-col gap-3 mobile:flex-row mobile:items-center mobile:justify-end">
+          <div className="relative w-full mobile:w-72 mobile:max-w-sm">
+            <Search
+              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-app-text-muted"
+              sx={{ fontSize: 18 }}
+            />
+            <input
+              type="search"
+              value={search}
+              onChange={(e) => onSearchChange(e.target.value)}
+              placeholder="Search by action or description"
+              className="h-9 w-full rounded-md border border-app-border bg-app-surface pl-9 pr-3 text-sm text-app-text outline-none transition-colors placeholder:text-app-text-muted hover:border-app-border-strong focus:border-app-primary-500 focus:ring-2 focus:ring-app-primary-100"
+            />
+          </div>
+
+          {onExportCsv ? (
+            <Button
+              label={isExporting ? 'Exporting...' : 'CSV'}
+              variant="outlined"
+              size="sm"
+              disabled={isLoading || isExporting || total === 0}
+              onClick={onExportCsv}
+              startIcon={<DownloadOutlined fontSize="small" />}
+            />
+          ) : null}
         </div>
       </div>
 

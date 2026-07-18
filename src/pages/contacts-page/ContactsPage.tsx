@@ -13,6 +13,7 @@ import { useAuth } from '../../services/context/AuthContext'
 import {
   createContact,
   deleteContact,
+  fetchAllContacts,
   fetchContacts,
   updateContact,
   type Contact,
@@ -20,6 +21,7 @@ import {
   type ContactStatus,
   type ContactsPagination,
 } from '../../services/api/contacts/contacts.api'
+import { buildExportFilename, downloadCsv } from '../../utils/csv'
 import { validateContactForm } from './utils/validateContactForm'
 
 const PAGE_SIZE = 10
@@ -53,6 +55,7 @@ const ContactsPage = () => {
   const [statusFilter, setStatusFilter] = useState<ContactStatus | ''>('')
   const [reloadToken, setReloadToken] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
+  const [isExporting, setIsExporting] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const [formOpen, setFormOpen] = useState(false)
@@ -127,6 +130,53 @@ const ContactsPage = () => {
     setPage(1)
   }
   const refreshList = () => setReloadToken((token) => token + 1)
+
+  const handleExportCsv = async () => {
+    if (isExporting) return
+
+    setIsExporting(true)
+    setErrorMessage('')
+
+    try {
+      const rows = await fetchAllContacts({
+        search: debouncedSearch,
+        status: statusFilter,
+      })
+
+      downloadCsv(
+        buildExportFilename('contacts'),
+        [
+          'First Name',
+          'Last Name',
+          'Email',
+          'Phone',
+          'Company',
+          'Job Title',
+          'Status',
+          'Notes',
+          'Created At',
+        ],
+        rows.map((contact) => [
+          contact.firstName,
+          contact.lastName,
+          contact.email,
+          contact.phone,
+          contact.companyName,
+          contact.jobTitle,
+          contact.status,
+          contact.notes,
+          contact.createdAt,
+        ]),
+      )
+    } catch (err: unknown) {
+      const message =
+        (err as { response?: { data?: { message?: string } } })?.response?.data
+          ?.message || 'Unable to export contacts'
+      setErrorMessage(message)
+    } finally {
+      setIsExporting(false)
+    }
+  }
 
   const resetImageState = () => {
     setImageFile(null)
@@ -285,12 +335,14 @@ const ContactsPage = () => {
       <ContactsTable
         contacts={contacts}
         isLoading={isLoading}
+        isExporting={isExporting}
         search={searchInput}
         onSearchChange={setSearchInput}
         statusFilter={statusFilter}
         onStatusFilterChange={handleStatusFilterChange}
         pagination={pagination}
         onPageChange={setPage}
+        onExportCsv={handleExportCsv}
         canManage={isAdmin}
         onEdit={openEditModal}
         onDelete={openDeleteModal}
